@@ -141,9 +141,9 @@ def job():
     for usuariosPool in usuariosPoolList:
         updateUserMinedToday(usuariosPool, newId)
         payUsers(usuariosPool, 0.01)
+job()
 
 schedule.every(1).day.at("12:00").do(job)
-job()
 
 while True:
     schedule.run_pending()
