@@ -115,7 +115,7 @@ def payUsers(usuariosPool, minimumPayout):
         print("Actualizados IDs de Ganancias Diarias ✔️")
         bigQueryUpdate(f"INSERT INTO BD1.pagosBTC(id, usuariosPool, wallet, monto, fecha, coin, valorBTC, txid, revShare, btcCommission) VALUES({lastPayId+1},'{usuariosPool}','{wallet}',{paymentAmount},TIMESTAMP_SECONDS({(int(datetime.now().replace(microsecond=0).timestamp()))}), 'BTC', {valorBTC}, '{txid}', {revShare}, {btcCommission})")
         print("Agregado pago a cliente en BD ✔️")
-        bigQueryUpdate(f"UPDATE BD1.usuarios SET revShare_mtd = COALESCE(revShare_mtd, 0)+{btcCommission}, totalPayed_mtd=COALESCE(totalPayed_mtd, 0)+{paymentAmount}, totalMined_mtd=COALESCE(totalMined_mtd,0)+{inmatureBalance} WHERE usuariosPool='{usuariosPool}'")
+        bigQueryUpdate(f"UPDATE BD1.usuarios SET revShare_mtd = COALESCE(revShare_mtd, 0)+{btcCommission}, totalPayed_mtd=COALESCE(totalPayed_mtd, 0)+{paymentAmount}, totalMined_mtd=COALESCE(totalMined_mtd,0)+{inmatureBalance}, inmatureBalance=0 WHERE usuariosPool='{usuariosPool}'")
         print("Actualizados valores de tabla Usuario ✔️")
         telegram_message(f"Hacer pago a {usuariosPool}, Monto minado: {inmatureBalance}, revShare: {btcCommission}, neto cliente: {paymentAmount} ")
     elif inmatureBalance < minimumPayout:
