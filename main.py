@@ -136,9 +136,9 @@ def job():
     dianuevoMes=1
     moveMTDtoSTD(dianuevoMes)
     #LEO ULTIMO ID EN BD DE gananciasDiarias
-    newId = getNewGananciasId()
     #Por cada usuario en la BD actualizo lo minado hoy y realizo pagos en caso de ser necesario
     for usuariosPool in usuariosPoolList:
+        newId = getNewGananciasId()
         updateUserMinedToday(usuariosPool, newId)
         payUsers(usuariosPool, 0.01)
 job()
