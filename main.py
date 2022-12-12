@@ -126,8 +126,8 @@ def payUsers(usuariosPool, minimumPayout):
 #VARIABLES
 toTerahash = 1000000000000
 minimumPayout = 0.01
-#client = Client(key=KEYBINANCE, secret=SECRETBINANCE)
-client = Client(key='Qu7J7lsjEp6Pnw9fHFV51qH24hnjuDoiv2dHwIaKs008ZJAPCisMzE47ferfqOYM', secret='qaY6EQur8pJabWCRpxkGvie0i2dBJf8WVONi8oybk3TvLQUcH1B96P1Lxty4Wf6n')
+client = Client(key=KEYBINANCE, secret=SECRETBINANCE)
+
 
 def job():
     #LEO BASE DE DATOS DE usuarios y me hago una lista
