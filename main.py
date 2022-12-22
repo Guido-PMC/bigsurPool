@@ -126,6 +126,11 @@ def payUsers(usuariosPool, minimumPayout):
         print("No llega pago minimo, actualizado saldo inmaduro ✔️")
     print(f"Monto total acumulado por cliente {usuariosPool} : {inmatureBalance}")
 
+def zabbix_push(puid, key, value):
+    stream = os.popen(f"zabbix_sender -z '54.92.215.92'    -s {puid} -k application.{key} -o {str(value)}")
+    output = stream.read()
+    print(f"ID: {puid}, key: {key}, value: {value} {output[37:][:23]}")
+
 #VARIABLES
 toTerahash = 1000000000000
 minimumPayout = 0.01
