@@ -8,7 +8,10 @@ from datetime import datetime
 import os
 import yfinance as yf
 import requests
+import time
 
+global last_run
+last_run = round(time.time())
 
 
 CREDS_BIGQUERY = '/creds/bigsurmining-14baacf42c48.json'
@@ -130,6 +133,10 @@ client = Client(key=KEYBINANCE, secret=SECRETBINANCE)
 
 
 def job():
+    global last_run
+    last_run = round(time.time())
+    global ping
+    ping = 1
     #LEO BASE DE DATOS DE usuarios y me hago una lista
     usuariosPoolList = loadUsersBQ()
     #CHEQUEO SI ES 1ERO DE MES PARA ACTUALIZAR DATOS
@@ -141,9 +148,16 @@ def job():
         newId = getNewGananciasId()
         updateUserMinedToday(usuariosPool, newId)
         payUsers(usuariosPool, 0.01)
+
+def monitor():
+    global last_run
+    zabbix_push("bigSurPool", "ping", 1)
+    zabbix_push("bigSurPool", "last_run", last_run)
+    print("--FIN MONITOR--")
 job()
 
 schedule.every(1).day.at("12:00").do(job)
+schedule.every(1).minutes.do(monitor)
 
 while True:
     schedule.run_pending()
