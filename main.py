@@ -80,7 +80,7 @@ def moveMTDtoSTD(dianuevoMes):
             print("Se actualizaron valores del mes a 0 ✔️")
 
 def updateUserMinedToday(usuariosPool, newId):
-    json1 = client.mining_earnings_list(algo="sha256",userName=usuariosPool)
+    json1 = client.mining_earnings_list(algo="sha256",userName=usuariosPool,pageSize=150)
     try:
         bigqueryDate = bigQueryRead(f"SELECT fecha FROM BD1.gananciasDiarias WHERE usuariosPool='{usuariosPool}'ORDER BY fecha DESC").iloc[0].iat[0]
     except Exception as e:
